@@ -5,8 +5,9 @@ The **Google Sheets Codebook Manager** is a utility script developed using Googl
 ## Features
 
 - **Code Responses**: Automatically code responses based on predefined categories and keywords.
-- **Add Keywords to Codebook**: Easily add new keywords to the codebook under existing code categories with checks for already included keywords.
+- **Add Keywords to Codebook**: Easily add new keywords to the codebook under selected code categories.
 - **Interactive User Interface**: Utilizes Google Sheets UI to prompt users for inputs and selections.
+- **Duplicate Keyword Checking**: Checks for duplicate keywords before adding them to the codebook.
 
 ## Installation
 
@@ -31,6 +32,16 @@ To use this script:
 2. Select the code category to add keywords under.
 3. Enter keywords (comma-separated) to be added under the selected code category.
 
+## Codebook Template
+
+I have shared a template Excel file (`Codebook_Template.xlsx`) to be used as the codebook. You can copy this template and populate it with your code categories and keywords before using the Google Sheets Codebook Manager.
+
+## Functionality Details
+
+### Duplicate Keyword Checking
+
+When adding new keywords to the codebook, the script automatically checks for duplicate keywords to ensure data integrity. If a keyword already exists under the selected code category, the script alerts the user and prevents duplicate entries.
+
 ## Customization
 
 You can customize the script by modifying the following sections:
@@ -41,3 +52,4 @@ You can customize the script by modifying the following sections:
 ## Contributing
 
 Contributions to this project are welcome! If you encounter any issues or have suggestions for improvements, feel free to open an issue or submit a pull request.
+
