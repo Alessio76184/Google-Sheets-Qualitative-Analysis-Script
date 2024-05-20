@@ -5,7 +5,7 @@ The **Google Sheets Codebook Manager** is a utility script developed using Googl
 ## Features
 
 - **Code Responses**: Automatically code responses based on predefined categories and keywords.
-- **Add Keywords to Codebook**: Easily add new keywords to the codebook under selected code categories.
+- **Add Keywords to the Codebook**: Easily add new keywords to the codebook under selected code categories.
 - **Interactive User Interface**: Utilizes Google Sheets UI to prompt users for inputs and selections.
 - **Duplicate Keyword Checking**: Checks for duplicate keywords before adding them to the codebook.
 
