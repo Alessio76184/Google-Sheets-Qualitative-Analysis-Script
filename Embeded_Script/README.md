@@ -1,44 +1,117 @@
-# Google Sheets Qualitative Analysis Script
+# 📄 Embedded Codification Script (Google Sheets)
 
-This script automates qualitative analysis tasks in Google Sheets, allowing you to code responses based on predefined categories and keywords for efficient data analysis.
+Automatically tag open-text survey responses based on a list of keywords and predefined categories.  
+This version of the script stores the codebook *directly in the code itself* (embedded).
 
-## Features
+---
 
-- **Coding Responses:** Automatically assign codes to responses based on predefined categories and keywords.
-- **Easy Integration:** Utilizes Google Apps Script, making it easy to run directly within Google Sheets.
-- **Customizable:** Modify categories and keywords to suit your specific analysis needs.
+## ⚡ What This Script Does
 
-## Usage
+- Adds a custom menu called **"Coding"** to your Google Sheet.
+- Lets you select a column of survey responses.
+- Automatically tags each response using keyword matching.
+- Writes the result (e.g., `WS`, `PIC`, etc.) in the adjacent column.
 
-### Setup
+---
 
-1. Open your Google Sheets document containing the responses you want to analyze.
-2. From the menu, go to **Extensions > Apps Script**.
-3. Paste the script into the Apps Script editor and save the project.
-4. Authorize the script to access your Google Sheets data.
+## 🛠️ How to Set It Up
 
-### Running the Script
+### 1. Open your Google Sheet
+Start with a Google Sheet that contains free-text responses. Place them in a single column (e.g., column B).
 
-1. In your Google Sheets document, select the column containing the responses you want to analyze.
-2. From the menu, go to **Coding > Code Responses**.
-3. The script will analyze the selected column and output the coded responses in an adjacent column.
+### 2. Open the Script Editor
+Go to:
 
-## Configuration
+![Open Script Editor](assets/Step%201%20-%20App%20Script.png)
 
-You can customize the script by modifying the categories and keywords defined in the script code. Each category corresponds to specific codes that will be assigned based on matching keywords.
+---
 
-### Categories
+### 3. Paste the Script  
+Delete the default code and paste in the script from this repo (`embedded-codification.gs`).
 
-- **OCI:** Order & Checkout Issues
-- **WS:** Website Stability
-- **PIC:** Payment Issues & Check-Out
-- **DI:** Delivery Issues
-- **PP:** Packaging Problems
-- **DP:** Discounts & Promotions
-- **SPI:** Size & Product Information
-- **FS:** Filtering & Sorting
-- **PS:** Product Selection
-- **LAP:** Login & Authentication
-- **WNU:** Website Navigation & User Experience
+![Paste the Script](assets/Step%202%20-%20Copy%20%26%20Paste.png)
 
-Feel free to adjust and expand these categories to fit your analysis requirements.
+---
+
+### 4. Save the Script  
+Click the save icon 💾 or press `Ctrl + S` to save the script.
+
+![Save the Script](assets/Step%203%20-%20Save%20Script.png)
+
+---
+
+### 5. Reload Your Google Sheet  
+Once saved, reload the tab. You’ll see a new menu item at the top of the sheet:
+![Run the Script from the Menu](assets/Step%204%20-%20Code%20Responses.png)
+
+---
+
+## 🧪 How to Use It
+
+1. Highlight the column that contains the free-text responses (e.g., column B).
+2. Click **Coding → Code Responses**
+3. The script will:
+   - Look for keywords inside each response
+   - Tag the response using codes like `WS`, `PIC`, `DP`, etc.
+   - Write the result in the next column (e.g., column C)
+4. A popup will confirm when it’s done.
+
+---
+
+## 🧠 About the Codebook
+
+This script uses an **embedded codebook**, defined inside the `codeResponse()` function as a list of categories and keywords.
+
+Example:
+
+```js
+{
+  code: 'PIC',
+  keywords: ['payment error', 'payment failure', 'payment problem']
+}
+```
+
+🔒 Since this is embedded inside the script, it’s not editable from the Sheet.
+🧱 Google Apps Script has a size limit, so this method is best for small codebooks (under ~1,000 keywords).
+
+If you need to manage a larger codebook or edit it without touching the code, try the External Codification version.
+
+---
+
+| Response                                           | Code |
+|----------------------------------------------------|------|
+| "My payment kept failing"                          | PIC  |
+| "The website keeps crashing on mobile"             | WS   |
+| "I wish the discount was applied at checkout"      | DP   |
+
+---
+
+## 🧩 Customising Categories
+To add or change codes/keywords:
+
+1. Open the Apps Script editor again.
+2. Scroll to the categories array in the codeResponse() function.
+3. Add a new object for your category or expand the keyword list.
+4. Save changes and reload the Sheet.
+
+---
+
+## 💡 Tip
+Use short, consistent category codes like:
+
+WS = Website Stability
+
+PIC = Payment Issue
+
+DP = Discounts & Promotions
+
+They’re easier to filter, analyze, and summarize later.
+
+---
+
+## 📌 Limitations
+❌ Does not support linking to an external file or .xlsx — all keywords must be inside the script.
+
+⛔ Limited by Google Apps Script storage size — not suitable for very large codebooks.
+
+🔍 Keyword matching is exact — no fuzzy or semantic matching.
