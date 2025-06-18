@@ -22,28 +22,22 @@ Start with a Google Sheet that contains free-text responses. Place them in a sin
 ### 2. Open the Script Editor
 Go to:
 
-![Open Script Editor](assets/Step_1_App_Script.png)
-
----
+![Open Script Editor](../assets/Step_1_App_Script.png)
 
 ### 3. Paste the Script  
 Delete the default code and paste in the script from this repo (`embedded-codification.gs`).
 
-![Paste the Script](assets/Step_2_Copy_Paste.png)
-
----
+![Paste the Script](../assets/Step_2_Copy_Paste.png)
 
 ### 4. Save the Script  
 Click the save icon 💾 or press `Ctrl + S` to save the script.
 
-![Save the Script](assets/Step_3_Save_Script.png)
-
----
+![Save the Script](../assets/Step_3_Save_Script.png)
 
 ### 5. Reload Your Google Sheet  
 Once saved, reload the tab. You’ll see a new menu item at the top of the sheet:
 
-![Run the Script from the Menu](assets/Step_4_Code_Responses.png)
+![Run the Script from the Menu](../assets/Step_4_Code_Responses.png)
 
 ---
 
