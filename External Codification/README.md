@@ -1,55 +1,166 @@
-# Google Sheets Codebook Manager
+# 📄 External Codification Script (Google Sheets)
 
-The **Google Sheets Codebook Manager** is a utility script developed using Google Apps Script to manage a codebook within Google Sheets. This script enables users to categorize and organize keywords under specific code categories, facilitating data coding and analysis workflows.
+Automatically tag open-text survey responses using a shared, scalable keyword-based codebook stored in a separate Google Sheet.  
+This version allows you to maintain a large, reusable codebook across multiple projects without editing the script.
 
-## Features
+---
 
-- **Code Responses**: Automatically code responses based on predefined categories and keywords.
-- **Add Keywords to the Codebook**: Easily add new keywords to the codebook under selected code categories.
-- **Interactive User Interface**: Utilizes Google Sheets UI to prompt users for inputs and selections.
-- **Duplicate Keyword Checking**: Checks for duplicate keywords before adding them to the codebook.
+## ⚡ What This Script Does
 
-## Installation
+- Adds a **"Coding"** menu to your Google Sheet.
+- Lets you select a column of responses to analyze.
+- Matches responses against a keyword-based **external codebook** (stored in another Google Sheet).
+- Outputs matching category codes in the adjacent column.
+- Allows you to **add new keywords directly via prompt**, with validation to prevent duplicates.
 
-To use this script:
+---
 
-1. Open your Google Sheets document.
-2. From the menu, go to `Extensions` > `Apps Script`.
-3. Paste the script into the Apps Script editor.
-4. Save the script and close the Apps Script editor.
+## 🛠️ How to Set It Up
 
-## Usage
+### 1. Prepare Your Codebook Sheet
 
-### Code Responses
+You’ll need a separate Google Sheet with a tab named `Codebook`. It should have at least these two columns:
 
-1. Select the column containing responses in your Google Sheets document.
-2. Go to `Custom Menu` > `Coding` > `Code Responses`.
-3. Follow the prompts to specify the number of rows to process and view coded responses in the adjacent column.
+| A (Code) | B (Keyword)        |
+|----------|--------------------|
+| PIC      | payment failure    |
+| WS       | unstable website   |
+| ...      | ...                |
 
-### Add Keywords to Codebook
+Optionally, you can add full category names in columns D and E like so:
 
-1. Go to `Custom Menu` > `Coding` > `Add Keywords to Codebook`.
-2. Select the code category to add keywords under.
-3. Enter keywords (comma-separated) to be added under the selected code category.
+| D (Code Name)        | E (Abbreviation) |
+|----------------------|------------------|
+| Website Stability    | WS               |
+| Payment Issues       | PIC              |
 
-## Codebook Template
+These help populate dropdowns when adding new keywords.
 
-I have shared a template Excel file (`Codebook_Template.xlsx`) to be used as the codebook. You can copy this template and populate it with your code categories and keywords before using the Google Sheets Codebook Manager.
+---
 
-## Functionality Details
+### 2. Copy the Script
 
-### Duplicate Keyword Checking
+1. Open the Google Sheet where you want to run the script.
+2. Go to: Extensions → Apps Script
 
-When adding new keywords to the codebook, the script automatically checks for duplicate keywords to ensure data integrity. If a keyword already exists under the selected code category, the script alerts the user and prevents duplicate entries.
+![Open Script Editor](../assets/Step_1_App_Script.png)
 
-## Customization
+3. Paste the contents of `external-codification.gs` into the script editor.
 
-You can customize the script by modifying the following sections:
+![Paste the Script](../assets/Step_2_Copy_Paste.png)
 
-- **Codebook Data**: Update the Google Sheets ID and sheet name in the `loadCategories()` and `addKeywordsToCodebook()` functions to match your codebook location.
-- **User Interface**: Modify UI messages and prompts as needed for your specific use case.
+4. Link the External Codebook:
 
-## Contributing
+Example URL:
 
-Contributions to this project are welcome! If you encounter any issues or have suggestions for improvements, feel free to open an issue or submit a pull request.
+```js
+https://docs.google.com/spreadsheets/d/1a2b3cD4EFghiJK5lmNOPqrS67tuVWXYZ/edit#gid=0
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+```
+
+```js
+var spreadsheetId = '[Replace with your spreadsheet ID located inside the URL]';
+```
+
+with:
+
+```js
+var spreadsheetId = '1a2b3cD4EFghiJK5lmNOPqrS67tuVWXYZ';
+``` 
+
+5. Save and close the editor.
+
+![Save the Script](../assets/Step_3_Save_Script.png)
+
+6. Reload Your Google Sheet
+
+![Open tool](../assets/Step_6_Use_Tool.png)
+
+---
+
+## 🧪 How to Use It
+Highlight the column with open-text responses.
+
+1. Go to Coding → Code Responses.
+2. When prompted, enter how many rows to process (up to the total number in your sheet).
+3. The script will:
+  - Match each response against the keywords in your external codebook.
+  - Return the first matching code.
+  - Write the result in the column to the right.
+
+---
+
+## ➕ Add New Keywords to Codebook
+
+
+This feature lets you expand your codebook directly from the Google Sheet — without editing the sheet manually.
+
+When you select **`Coding → Add Keywords to Codebook`** from the menu, here's what happens:
+
+### 🧩 Step-by-Step
+
+1. **Choose a Category**  
+   A prompt appears with available codes (e.g., `WS`, `PIC`, `DP`).  
+   These are pulled from columns **D (Code Name)** and **E (Abbreviation)** in your Codebook sheet.
+
+2. **Enter Keywords**  
+   You’ll be asked to input one or more keywords (comma-separated).  
+   Example: slow checkout, confusing navigation, login issues
+
+3. **Validation Check**  
+- The script checks existing keywords to **prevent duplicates**.
+- If any keyword is already used under any category, you'll be notified, and those duplicates will be skipped.
+
+4. **Append to Codebook**  
+All valid new keywords are automatically added to the next available row in the Codebook sheet under the selected code.
+
+5. **Confirmation**  
+Once added, a pop-up confirms successful insertion.
+
+---
+
+## ✅ Example Codebook Entries
+| Code | Keyword               |
+|------|------------------------|
+| WS   | site crashes           |
+| DP   | discount not applied   |
+| PIC  | payment failed         |
+| PS   | size guide missing     |
+
+---
+
+## 📌 Notes and Tips
+- Matching is case-insensitive and uses full-word matching (\b word boundaries).
+- Only the first matching code is returned for each response.
+- If no match is found, the output cell is left blank.
+- The keyword list can be easily expanded through the UI or directly in the codebook Sheet.
+
+---
+
+## 🔐 Permissions Required
+When first run, the script will ask for authorization to:
+- Read/write the current spreadsheet (responses)
+- Access the external Codebook spreadsheet (via ID)
+These are required to read your keyword data and write codified responses.
+
+---
+
+## 🖼️ Visual Guide
+
+### 📎 Included Codebook Template
+
+You can find a working codebook template in this repository:
+
+📄 [Codebook Database.xlsx](./Codebook%20Database.xlsx)
+
+To use it:
+- Open it in Google Sheets
+- Rename the tab to `Codebook` (if not already)
+- Copy the **spreadsheet ID** from the URL
+- Paste it into your script as shown above
+
+
+
+
+
 
