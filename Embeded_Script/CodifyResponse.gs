@@ -44,6 +44,9 @@ function codeResponses() {
 }
 
 function codeResponse(response) {
+  response = String(response || '').toLowerCase();
+
+
   // Define your qualitative analysis keywords and corresponding codes
   var categories = [
     // Order & Checkout Issues (OCI)
@@ -62,6 +65,7 @@ function codeResponse(response) {
         'unstable website',
         'site crashes',
         'web page issues',
+        'Too often the system crashes',
       ],
       code: 'WS'
     },
@@ -145,10 +149,9 @@ function codeResponse(response) {
 
   var codes = [];
 
-  // Iterate through each category and prioritize the first matching category
   categories.forEach(function(category) {
     var matched = category.keywords.some(function(keyword) {
-      var regex = new RegExp('\\b' + escapeRegExp(keyword) + '\\b', 'gi');
+      var regex = new RegExp('\\b' + escapeRegExp(keyword.toLowerCase()) + '\\b', 'gi');
       return response.match(regex);
     });
 
@@ -157,7 +160,6 @@ function codeResponse(response) {
     }
   });
 
-  // If no codes are matched, default to 'OTHER'
   if (codes.length === 0) {
     codes.push('');
   }
